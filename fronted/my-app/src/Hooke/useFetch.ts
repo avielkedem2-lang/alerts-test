@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { alertStore } from "../store/alertStore";
 
 
 
 
 export function useFetch(url: string){
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
+    const setAlerts = alertStore(s => s.setAlerts)
     useEffect(() => {
         const getData = async () => {
             const {data} = await axios.get(url);
-            setData(data.data)
+            setAlerts(data.data)
         }
         getData()
     },[url])
 
-    return {data}
+    // return {data}
 }

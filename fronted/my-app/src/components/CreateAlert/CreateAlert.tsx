@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { createAlert } from "../../fetch";
 
 
 type Alert = {
@@ -14,12 +15,19 @@ type Alert = {
 
 
 export default function CreateAlert() {
-    const alert = useRef<Alert>({ displayName: "", description: "", priority: "", arena: "", status: "", lat: 0, lon: 0 })    
+    const alert = useRef<Alert>({ displayName: "", description: "", priority: "Low", arena: "North", status: "Active", lat: 0, lon: 0 })
+    const [error, setError] = useState('')
     return (
         <div onSubmit={(e) => {
             e.preventDefault()
-            
-            
+            createAlert(alert.current).then((data) => {
+                if (data.data) {
+                    console.log("ddddddddd");
+                } else {
+                    setError(data.message)
+                }
+            })
+
         }}>
             <form >
                 <input type="text" placeholder="displayName" onChange={(e) => alert.current = { ...alert.current, displayName: e.target.value }} />
@@ -46,10 +54,14 @@ export default function CreateAlert() {
                     <option value="Handled">Handled</option>
                 </select>
 
-                <input type="number" placeholder="lat" onChange={(e) => alert.current = { ...alert.current, lat: JSON.parse(e.target.value) }} />
-                <input type="number" placeholder="lon" onChange={(e) => alert.current = { ...alert.current, lon: JSON.parse(e.target.value) }} />
+                <input type="text" placeholder="lat" onChange={(e) => alert.current = { ...alert.current, lat: JSON.parse(e.target.value) }} />
+                <input type="text" placeholder="lon" onChange={(e) => alert.current = { ...alert.current, lon: JSON.parse(e.target.value) }} />
 
                 <button type="submit">submit</button>
+                <br />
+                {error && (
+                    <p>{error}</p>
+                )}
             </form>
         </div>
     )

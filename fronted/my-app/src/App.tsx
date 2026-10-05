@@ -6,18 +6,20 @@ import { useFetch } from './Hooke/useFetch'
 import HomePage from './pages/HomePage'
 import { alertStore } from './store/alertStore'
 import CreateAlert from './components/CreateAlert/CreateAlert'
+import AllCards from './components/AllCards/AllCards'
 
 function App() {
-  const {data} = useFetch("http://localhost:3000/api/alerts")
-  const setAlerts = alertStore(s => s.setAlerts)
-  setAlerts(data)
+  useFetch("http://localhost:3000/api/alerts")
+  const alerts = alertStore(s => s.alerts)
+
   return (
     <>
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/create' element={<CreateAlert/>}/>
-        <Route path='/map' element={<AlertsMap alerts={data}/>}/>
-        <Route path='*' element="404 not fond page"/>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/create' element={<CreateAlert />} />
+        <Route path='/all-cards' element={<AllCards />} />
+        <Route path='/map' element={<AlertsMap alerts={alerts} />} />
+        <Route path='*' element="404 not fond page" />
       </Routes>
     </>
   )
