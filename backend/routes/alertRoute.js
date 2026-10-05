@@ -1,5 +1,6 @@
 import express from "express"
 import { createAlert, deleteAlertFromDb, getAll, getById, updateAlert } from "../service/alertService.js";
+import { checkBody, checkParams } from "../middleware/alert.midd.js";
 
 
 
@@ -25,7 +26,7 @@ router.get("/", async (req, res) => {
 
 
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", checkParams, async (req, res) => {
     try {
         const id = req.params.id;
         const data = await getById(id)
@@ -43,7 +44,7 @@ router.get("/:id", async (req, res) => {
 
 
 
-router.post("/", async (req, res) => {
+router.post("/", checkBody, async (req, res) => {
     try {
         const body = req.body
         const data = await createAlert(body)
@@ -60,7 +61,7 @@ router.post("/", async (req, res) => {
 
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkParams, async (req, res) => {
     try {
         const id = req.params.id
         const data = await deleteAlertFromDb(id);
@@ -76,7 +77,7 @@ router.delete("/:id", async (req, res) => {
 
 
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkParams, checkBody, async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body
