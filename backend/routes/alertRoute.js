@@ -1,6 +1,6 @@
 import express from "express"
 import { createAlert, deleteAlertFromDb, getAll, getById, updateAlert } from "../service/alertService.js";
-import { checkBody, checkParams } from "../middleware/alert.midd.js";
+import { checkBody, checkBodyUpdate, checkParams } from "../middleware/alert.midd.js";
 
 
 
@@ -77,7 +77,7 @@ router.delete("/:id", checkParams, async (req, res) => {
 
 
 
-router.put("/:id", checkParams, checkBody, async (req, res) => {
+router.put("/:id", checkParams, checkBodyUpdate, async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body

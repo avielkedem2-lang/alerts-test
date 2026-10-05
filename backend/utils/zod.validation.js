@@ -12,3 +12,16 @@ export const bodyValidation = z.object({
     lon: z.number(),
     lat: z.number(),
 })
+
+
+
+
+export const updateValidation = z.object({
+    displayName: z.string().min(1).optional(),
+    description: z.string().min(1).optional(),
+    priority: z.string().min(1).optional(),
+    arena: z.string().min(1).optional(),
+    status: z.string().min(1).optional(),
+    lon: z.number().optional(),
+    lat: z.number().optional(),
+})
