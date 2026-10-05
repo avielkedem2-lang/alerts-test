@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { deleteAlertById } from "../../fetch";
+import { deleteAlertById, updateAlertById } from "../../fetch";
 import "./createCard.css"
+import { Link } from "react-router";
 
 type Alert = {
     _id: string,
@@ -18,8 +19,6 @@ type Alert = {
 export default function CreateCard(alert: Alert) {
     const [error, setError] = useState("")
     const deleteAlert = () => {
-        console.log("ffffffffffffff");
-        
         deleteAlertById(alert._id).then((data) => {
             if (data.data) {
                 console.log(data.data);
@@ -40,7 +39,7 @@ export default function CreateCard(alert: Alert) {
                 <p>lat: {alert.lat}</p>
                 <p>lon: {alert.lon}</p>
             </section>
-            <button>update alert</button>
+            <Link to={`/update/${alert._id}`}><button>update alert</button></Link>
             <button onClick={deleteAlert}>delete alert</button>
             {error && (
                 <p>{error}</p>
