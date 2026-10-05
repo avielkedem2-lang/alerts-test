@@ -3,15 +3,18 @@ import { Route, Routes } from 'react-router'
 import './App.css'
 import AlertsMap from './components/Map/AlertsMap'
 import { useFetch } from './Hooke/useFetch'
+import HomePage from './pages/HomePage'
+import { alertStore } from './store/alertStore'
 
 function App() {
   const {data} = useFetch("http://localhost:3000/api/alerts")
-  console.log(data);
-  
+  const setAlerts = alertStore(s => s.setAlerts)
+  setAlerts(data)
   return (
     <>
       <Routes>
-        <Route path='/' element={<AlertsMap alerts={data}/>}/>
+        <Route path='/' element={<HomePage/>}/>
+        <Route path='/map' element={<AlertsMap alerts={data}/>}/>
       </Routes>
     </>
   )
