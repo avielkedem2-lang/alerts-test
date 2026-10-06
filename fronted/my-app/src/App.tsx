@@ -9,6 +9,10 @@ import CreateAlert from './components/CreateAlert/CreateAlert'
 import AllCards from './components/AllCards/AllCards'
 import UpdateAlert from './components/UpdateAlert/UpdateAlert'
 import GetAlert from './components/GetAlert/GetAlert'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import Soldier from './pages/Soldier'
 
 function App() {
   useFetch("http://localhost:3000/api/alerts")
@@ -17,12 +21,15 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/create' element={<CreateAlert />} />
-        <Route path='/all-cards' element={<AllCards />} />
-        <Route path='/map' element={<AlertsMap alerts={alerts} />} />
-        <Route path='/update/:id' element={<UpdateAlert/>}/>
-        <Route path='/get-alert/:id' element={<GetAlert/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/soldier' element={<ProtectedRoute><Soldier /></ProtectedRoute>}/>
+        <Route path='/nav' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route path='/create' element={<ProtectedRoute><CreateAlert /></ProtectedRoute>} />
+        <Route path='/all-cards' element={<ProtectedRoute><AllCards /></ProtectedRoute>} />
+        <Route path='/map' element={<ProtectedRoute><AlertsMap alerts={alerts} /></ProtectedRoute>} />
+        <Route path='/update/:id' element={<ProtectedRoute><UpdateAlert/></ProtectedRoute>}/>
+        <Route path='/get-alert/:id' element={<ProtectedRoute><GetAlert/></ProtectedRoute>}/>
         <Route path='*' element="404 not fond page" />
       </Routes>
     </>
