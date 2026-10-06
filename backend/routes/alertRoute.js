@@ -10,7 +10,8 @@ const router = express.Router();
 
 router.get("/", checkToken, async (req, res) => {
     try {
-        const data = await getAll()
+        const token = req.token
+        const data = await getAll(token)
         res.status(200).json({ data })
     } catch (err) {
         if (err.status) {
@@ -28,8 +29,9 @@ router.get("/", checkToken, async (req, res) => {
 
 router.get("/:id", checkToken, checkParams, async (req, res) => {
     try {
+        const token = req.token
         const id = req.params.id;
-        const data = await getById(id)
+        const data = await getById(id, token)
         res.status(200).json({ data })
     } catch (err) {
         if (err.status) {
@@ -46,8 +48,9 @@ router.get("/:id", checkToken, checkParams, async (req, res) => {
 
 router.post("/", checkToken, checkBody, async (req, res) => {
     try {
+        const token = req.token
         const body = req.body
-        const data = await createAlert(body)
+        const data = await createAlert(body, token)
         res.status(201).json({ data })
     } catch (err) {
         if (err.status) {
@@ -63,8 +66,9 @@ router.post("/", checkToken, checkBody, async (req, res) => {
 
 router.delete("/:id", checkToken, checkParams, async (req, res) => {
     try {
+        const token = req.token
         const id = req.params.id
-        const data = await deleteAlertFromDb(id);
+        const data = await deleteAlertFromDb(id, token);
         res.status(200).json({ data })
     } catch (err) {
         if (err.status) {
@@ -79,9 +83,10 @@ router.delete("/:id", checkToken, checkParams, async (req, res) => {
 
 router.patch("/:id", checkToken, checkParams, checkBodyUpdate, async (req, res) => {
     try {
+        const token = req.token
         const id = req.params.id
         const body = req.body
-        const data = await updateAlert(id, body)
+        const data = await updateAlert(id, body, token)
         res.status(200).json({ data })
     } catch (err) {
         if (err.status) {
