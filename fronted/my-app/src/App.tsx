@@ -2,7 +2,6 @@
 import { Route, Routes } from 'react-router'
 import './App.css'
 import AlertsMap from './components/Map/AlertsMap'
-import { useFetch } from './Hooke/useFetch'
 import HomePage from './pages/HomePage'
 import { alertStore } from './store/alertStore'
 import CreateAlert from './components/CreateAlert/CreateAlert'
@@ -13,6 +12,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Soldier from './pages/Soldier'
+import AllSoldiers from './components/AllSoldiers/AllSoldiers'
+import DeleteSoldier from './components/DeleteSoldier/DeleteSoldier'
 
 function App() {
   const alerts = alertStore(s => s.alerts)
@@ -28,6 +29,8 @@ function App() {
           <Route path='/map' element={<ProtectedRoute><AlertsMap alerts={alerts} /></ProtectedRoute>} />
           <Route path='/update/:id' element={<ProtectedRoute><UpdateAlert /></ProtectedRoute>} />
           <Route path='/get-alert/:id' element={<ProtectedRoute><GetAlert /></ProtectedRoute>} />
+          <Route path='/all-soldiers' element={<ProtectedRoute><AllSoldiers/></ProtectedRoute>}/>
+          <Route path='/delete' element={<ProtectedRoute><DeleteSoldier/></ProtectedRoute>}/>
         </Route>
 
         <Route path='*' element="404 not fond page" />

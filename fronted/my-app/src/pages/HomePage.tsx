@@ -38,6 +38,8 @@ export default function HomePage() {
                 <section>
                     <Link to={"/create"}><button>To create</button></Link>
                     <Link to={"/register"}><button>To register</button></Link>
+                    <Link to={"/all-soldiers"}><button>Get all soldiers</button></Link>
+                    <Link to={"/delete"}><button>delete soldier</button></Link>
                 </section>
             )}
             <Outlet />

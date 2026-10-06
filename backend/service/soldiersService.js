@@ -38,11 +38,25 @@ export async function getSoldier(token) {
 }
 
 
-export async function deleteSoldier(token) {
-    const id = decodeToken(token).id
-    const soldier = await soldiersDal.findSoldierById(id);
+export async function deleteSoldier(token, id) {
+    const soldierId = decodeToken(token).id
+    const soldier = await soldiersDal.findSoldierById(soldierId);
     if (!soldier) throw createError(404, "Not fond soldier");
     if (soldier.role !== "admin") throw createError(400, "The soldier is not allowed to delete a new soldier");
     await soldiersDal.deleteSoldier(id)
     return { data: "soldier delete successfully" }
+};
+
+
+
+
+export async function getAllUsers(token) {
+    const id = decodeToken(token).id
+    const soldier = await soldiersDal.findSoldierById(id);
+    console.log(soldier);
+    
+    if (!soldier) throw createError(404, "Not fond soldier");
+    if (soldier.role !== "admin") throw createError(400, "The soldier is not allowed to delete a new soldier");
+    const soldiers = await soldiersDal.findAllSoldiers();
+    return soldiers
 }

@@ -61,6 +61,8 @@ export async function login(body: object) {
 
 async function sendRequestGet(url: string, token:string) {
     try {
+        console.log("ddddddddd");
+    
         const {data} = await axios.get(url, {headers: {token}})
         return data
     } catch (err) {
@@ -86,4 +88,35 @@ export async function getSoldierFromServer(token: string) {
     const url = "http://localhost:3000/api/auth/me";
     const res =  await sendRequestGet(url, token)
     return res
+}
+
+
+
+export async function getSoldiers(token:string) {
+    const url = "http://localhost:3000/api/auth/users"
+    return await sendRequestGet(url, token)
+}
+
+
+
+
+
+async function sendRequestDelete(url: string, token:string) {
+    try {
+        const {data} = await axios.delete(url, {headers: {token}})
+        return data
+    } catch (err) {
+        if (axios.isAxiosError(err)){
+            const message = err.response?.data
+            console.log(message);
+            return message
+        }
+    }
+};
+
+
+
+export async function deleteSoldierFromServer(id:string, token:string) {
+    const url = `http://localhost:3000/api/auth/users/${id}`
+    return await sendRequestDelete(url, token)
 }

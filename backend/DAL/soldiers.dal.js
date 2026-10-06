@@ -14,7 +14,7 @@ async function inertSoldier(soldier) {
 
 
 
-async function findAllSoldiers(params) {
+async function findAllSoldiers() {
     return await collection.find().toArray()
 };
 

@@ -1,7 +1,7 @@
 import express from "express"
-import { createSoldier, deleteSoldier, getSoldier, loginSoldier } from "../service/soldiersService.js"
+import { createSoldier, deleteSoldier, getAllUsers, getSoldier, loginSoldier } from "../service/soldiersService.js"
 import { checkLogin, checkRegister } from "../middleware/soldiers.midd.js"
-import {checkToken} from "../middleware/alert.midd.js"
+import {checkParams, checkToken} from "../middleware/alert.midd.js"
 
 
 const router = express.Router()
@@ -60,11 +60,25 @@ router.get("/me", checkToken, async (req, res) => {
 
 
 
-
-router.delete("/users/:id", checkToken,async (req, res) => {
+router.get("/users", checkToken, async (req, res) => {
     try {
         const token = req.token
-        const data = await deleteSoldier(token)
+        const data = await getAllUsers(token)
+        res.status(200).json((data))
+    } catch (err) {
+        if (err.status) {
+            res.status(err.status).json({ message: err.message })
+        }
+        console.log(err);
+    }
+})
+
+
+router.delete("/users/:id",checkParams,  checkToken,async (req, res) => {
+    try {
+        const token = req.token
+        const id = req.params.id
+        const data = await deleteSoldier(token, id)
         res.status(200).json((data))
     } catch (err) {
         if (err.status) {
