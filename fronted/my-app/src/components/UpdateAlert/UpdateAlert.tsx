@@ -27,7 +27,7 @@ export default function UpdateAlert() {
                 updateAlertById(id!,alert.current).then((data) => {
                     if (data.data) {
                         console.log("ddddddddd");
-                        return navigate("/all-cards")
+                        return navigate(-1)
                     } else {
                         setError(data.message)
                     }

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { Link } from "react-router"
-import { getAlertById } from "../../fetch";
+import { deleteAlertById, getAlertById } from "../../fetch";
 
 
 
@@ -25,6 +25,16 @@ export default function GetAlert() {
     const [error, setError] = useState('')
     const [isAlert, setIsAlert] = useState(false)
     const [isError, setIsError] = useState<boolean>(false)
+
+    const deleteAlert = () => {
+            deleteAlertById(id.current).then((data) => {
+                if (data.data) {
+                    console.log(data.data);
+                } else {
+                    setError(data.message)
+                }
+            })
+        }
     return (
         <div>
             <form onSubmit={(e) => {
@@ -59,10 +69,10 @@ export default function GetAlert() {
                             <p>lon: {alert?.lon}</p>
                         </section>
                         <Link to={`/update/${alert?._id}`}><button>update alert</button></Link>
-                        {/* <button onClick={deleteAlert}>delete alert</button>
+                        <button onClick={deleteAlert}>delete alert</button>
                                 {error && (
                                     <p>{error}</p>
-                                )} */}
+                                )}
                     </div>
                 )}
             </form>
