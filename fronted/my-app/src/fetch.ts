@@ -77,3 +77,31 @@ export async function updateAlertById(id: string, body: object) {
     const res = await sendRequestPatch(url, body)
     return res
 }
+
+
+
+
+
+
+
+async function sendRequestGet(url: string) {
+    try {
+        const {data} = await axios.get(url)
+        return data
+    } catch (err) {
+        if (axios.isAxiosError(err)){
+            const message = err.response?.data
+            console.log(message);
+            return message
+        }
+    }
+};
+
+
+
+
+export async function getAlertById(id: string) {
+    const url = `http://localhost:3000/api/alerts/${id}`;
+    const res = await sendRequestGet(url)
+    return res
+}

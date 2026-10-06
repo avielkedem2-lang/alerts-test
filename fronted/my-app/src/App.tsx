@@ -8,6 +8,7 @@ import { alertStore } from './store/alertStore'
 import CreateAlert from './components/CreateAlert/CreateAlert'
 import AllCards from './components/AllCards/AllCards'
 import UpdateAlert from './components/UpdateAlert/UpdateAlert'
+import GetAlert from './components/GetAlert/GetAlert'
 
 function App() {
   useFetch("http://localhost:3000/api/alerts")
@@ -21,6 +22,7 @@ function App() {
         <Route path='/all-cards' element={<AllCards />} />
         <Route path='/map' element={<AlertsMap alerts={alerts} />} />
         <Route path='/update/:id' element={<UpdateAlert/>}/>
+        <Route path='/get-alert/:id' element={<GetAlert/>}/>
         <Route path='*' element="404 not fond page" />
       </Routes>
     </>

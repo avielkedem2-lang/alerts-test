@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteAlertById, updateAlertById } from "../../fetch";
+import { deleteAlertById } from "../../fetch";
 import "./createCard.css"
 import { Link } from "react-router";
 
@@ -44,7 +44,6 @@ export default function CreateCard(alert: Alert) {
             {error && (
                 <p>{error}</p>
             )}
-            
         </div>
     )
 }
