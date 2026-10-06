@@ -77,7 +77,7 @@ router.delete("/:id", checkParams, async (req, res) => {
 
 
 
-router.put("/:id", checkParams, checkBodyUpdate, async (req, res) => {
+router.patch("/:id", checkParams, checkBodyUpdate, async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body
