@@ -84,5 +84,6 @@ export async function getToken(token:string) {
 
 export async function getSoldierFromServer(token: string) {
     const url = "http://localhost:3000/api/auth/me";
-    return await sendRequestGet(url, token)
+    const res =  await sendRequestGet(url, token)
+    return res
 }

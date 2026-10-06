@@ -10,7 +10,7 @@ export function useFetch(url: string, token: string){
     const setAlerts = alertStore(s => s.setAlerts)
     useEffect(() => {
         const getData = async () => {
-            const {data} = await axios.get(url);
+            const {data} = await axios.get(url, {headers: {token}});
             setAlerts(data.data)
         }
         getData()

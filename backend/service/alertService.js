@@ -6,10 +6,9 @@ import soldiersDal from "../DAL/soldiers.dal.js";
 
 
 export async function createAlert(body, token) {
-    const id = decodeToken(token).id
-    const soldier = await soldiersDal.findSoldierById(id);
-    const alerts = await alertDal.insertAlert(body);
-    const res = filterByRole(alerts, soldier)
+    
+    const res = await alertDal.insertAlert(body);
+    
     return res
 }
 
@@ -17,7 +16,10 @@ export async function createAlert(body, token) {
 
 
 export async function getAll(token) {
-    const res = await alertDal.findAllAlerts()
+    const id = decodeToken(token).id
+    const soldier = await soldiersDal.findSoldierById(id);
+    const alerts = await alertDal.findAllAlerts()
+    const res = filterByRole(alerts, soldier)
     return res
 }
 
@@ -26,6 +28,9 @@ export async function getAll(token) {
 export async function getById(id, token) {
     const res = await alertDal.findAlertById(id);
     if (!res) throw createError(404, "not fond alert");
+    const soldierId = decodeToken(token).id
+    const soldier = await soldiersDal.findSoldierById(soldierId);
+    if (res.arena.toLowerCase() !== soldier.assignedArena.toLowerCase()) throw createError(404, "not fond alert");
     return res
 }
 
@@ -52,7 +57,7 @@ export async function updateAlert(id, body, token) {
 
 
 function filterByRole(alerts, soldier){
-    if (soldier.role !== "admin" || soldier.role !== "general_user") return alerts;
+    if (soldier.role === "admin" || soldier.role === "general_user") return alerts;
     const alertsFilter = alerts.filter((a) => {return a.arena.toLowerCase() === soldier.assignedArena.toLowerCase()});
     return alertsFilter
 }
