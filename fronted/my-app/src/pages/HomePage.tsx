@@ -1,11 +1,18 @@
 import { Link, Outlet } from "react-router"
 import { soldierStore } from "../store/soldierStore"
+import { useFetch } from "../Hooke/useFetch"
+import { alertStore } from "../store/alertStore"
 
 export default function HomePage() {
+    const token = localStorage.getItem("token")
+    useFetch("http://localhost:3000/api/alerts", token!)
+
     const soldier = soldierStore(s => s.soldier)
     const logOut = () => {
         localStorage.removeItem("token")
     }
+    console.log(soldier);
+    
     return (
         <div>
             <p>name: {soldier.username} </p>

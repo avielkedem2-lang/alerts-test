@@ -23,10 +23,10 @@ export default function UpdateAlert() {
         <div>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                if (Object.keys(alert).length === 0) return (<p>you</p>)
-                updateAlertById(id!,alert.current).then((data) => {
+                if (Object.keys(alert).length === 0) return (<p>you</p>);
+                const token = localStorage.getItem("token")
+                updateAlertById(id!,alert.current, token!).then((data) => {
                     if (data.data) {
-                        console.log("ddddddddd");
                         return navigate(-1)
                     } else {
                         setError(data.message)

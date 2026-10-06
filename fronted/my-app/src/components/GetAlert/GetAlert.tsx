@@ -25,21 +25,22 @@ export default function GetAlert() {
     const [error, setError] = useState('')
     const [isAlert, setIsAlert] = useState(false)
     const [isError, setIsError] = useState<boolean>(false)
+    const token = localStorage.getItem("token")
 
     const deleteAlert = () => {
-            deleteAlertById(id.current).then((data) => {
-                if (data.data) {
-                    console.log(data.data);
-                } else {
-                    setError(data.message)
-                }
-            })
-        }
+        deleteAlertById(id.current, token!).then((data) => {
+            if (data.data) {
+                console.log(data.data);
+            } else {
+                setError(data.message)
+            }
+        })
+    }
     return (
         <div>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                getAlertById(id.current).then((data) => {
+                getAlertById(id.current, token!).then((data) => {
                     console.log(data);
                     if (data.data) {
                         setAlert(data.data)
@@ -70,9 +71,9 @@ export default function GetAlert() {
                         </section>
                         <Link to={`/update/${alert?._id}`}><button>update alert</button></Link>
                         <button onClick={deleteAlert}>delete alert</button>
-                                {error && (
-                                    <p>{error}</p>
-                                )}
+                        {error && (
+                            <p>{error}</p>
+                        )}
                     </div>
                 )}
             </form>

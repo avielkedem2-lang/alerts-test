@@ -3,11 +3,11 @@ import { create } from "zustand";
 
 
 type Soldier = {
-  _id: string
-  username: string,
-  email: string,
-  role: string,
-  assignedArena: string
+  _id?: string
+  username?: string,
+  email?: string,
+  role?: string,
+  assignedArena?: string
 }
 
 
@@ -20,6 +20,6 @@ type SoldierType= {
 
 
 export const soldierStore = create<SoldierType>((set)=> ({
-    soldier: {_id: '', username: '', email: '', role: "", assignedArena: "" },
+    soldier: {},
     setSoldier: (soldier: Soldier) => set(() => ({soldier}))
 }))

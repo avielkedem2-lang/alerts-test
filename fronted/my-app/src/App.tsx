@@ -15,9 +15,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Soldier from './pages/Soldier'
 
 function App() {
-  useFetch("http://localhost:3000/api/alerts")
   const alerts = alertStore(s => s.alerts)
-
   return (
     <>
       <Routes>

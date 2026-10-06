@@ -3,12 +3,12 @@ import axios from "axios";
 
 
 
-async function sendRequestPost(url: string, body: object) {
+async function sendRequestPost(url: string, body: object, token: string) {
     try {
-        const {data} = await axios.post(url, body)
+        const { data } = await axios.post(url, body, { headers: { token } })
         return data
     } catch (err) {
-        if (axios.isAxiosError(err)){
+        if (axios.isAxiosError(err)) {
             const message = err.response?.data
             console.log(message);
             return message
@@ -19,9 +19,9 @@ async function sendRequestPost(url: string, body: object) {
 
 
 
-export async function createAlert(body: object) {
+export async function createAlert(body: object, token: string) {
     const url = "http://localhost:3000/api/alerts";
-    const res = await sendRequestPost(url, body)
+    const res = await sendRequestPost(url, body, token)
     return res
 }
 
@@ -29,12 +29,12 @@ export async function createAlert(body: object) {
 
 
 
-async function sendRequestDelete(url: string) {
+async function sendRequestDelete(url: string, token: string) {
     try {
-        const {data} = await axios.delete(url)
+        const { data } = await axios.delete(url, { headers: { token } })
         return data
     } catch (err) {
-        if (axios.isAxiosError(err)){
+        if (axios.isAxiosError(err)) {
             const message = err.response?.data
             console.log(message);
             return message
@@ -46,9 +46,9 @@ async function sendRequestDelete(url: string) {
 
 
 
-export async function deleteAlertById(id: string) {
+export async function deleteAlertById(id: string, token: string) {
     const url = `http://localhost:3000/api/alerts/${id}`;
-    const res = await sendRequestDelete(url)
+    const res = await sendRequestDelete(url, token)
     return res
 }
 
@@ -57,12 +57,12 @@ export async function deleteAlertById(id: string) {
 
 
 
-async function sendRequestPatch(url: string, body: object) {
+async function sendRequestPatch(url: string, body: object, token: string) {
     try {
-        const {data} = await axios.patch(url, body)
+        const { data } = await axios.patch(url, body, { headers: { token } })
         return data
     } catch (err) {
-        if (axios.isAxiosError(err)){
+        if (axios.isAxiosError(err)) {
             const message = err.response?.data
             console.log(message);
             return message
@@ -72,9 +72,9 @@ async function sendRequestPatch(url: string, body: object) {
 
 
 
-export async function updateAlertById(id: string, body: object) {
+export async function updateAlertById(id: string, body: object, token: string) {
     const url = `http://localhost:3000/api/alerts/${id}`;
-    const res = await sendRequestPatch(url, body)
+    const res = await sendRequestPatch(url, body, token)
     return res
 }
 
@@ -84,12 +84,12 @@ export async function updateAlertById(id: string, body: object) {
 
 
 
-async function sendRequestGet(url: string) {
+async function sendRequestGet(url: string, token: string) {
     try {
-        const {data} = await axios.get(url)
+        const { data } = await axios.get(url, { headers: { token } })
         return data
     } catch (err) {
-        if (axios.isAxiosError(err)){
+        if (axios.isAxiosError(err)) {
             const message = err.response?.data
             console.log(message);
             return message
@@ -100,8 +100,8 @@ async function sendRequestGet(url: string) {
 
 
 
-export async function getAlertById(id: string) {
+export async function getAlertById(id: string, token: string) {
     const url = `http://localhost:3000/api/alerts/${id}`;
-    const res = await sendRequestGet(url)
+    const res = await sendRequestGet(url, token)
     return res
 }

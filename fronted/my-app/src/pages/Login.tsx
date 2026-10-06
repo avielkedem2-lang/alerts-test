@@ -35,8 +35,6 @@ export default function Login() {
                 <input type="password" placeholder="password" required onChange={(e) => soldier.current = { ...soldier.current, password: e.target.value }} />
                 <button type="submit">submit</button>
                 <br />
-                <Link to={"/register"}><button>To register</button></Link>
-                <br />
                 {isError && (
                     <p>{error}</p>
                 )}

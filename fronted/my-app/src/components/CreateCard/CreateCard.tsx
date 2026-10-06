@@ -19,7 +19,8 @@ type Alert = {
 export default function CreateCard(alert: Alert) {
     const [error, setError] = useState("")
     const deleteAlert = () => {
-        deleteAlertById(alert._id).then((data) => {
+        const token = localStorage.getItem("token")
+        deleteAlertById(alert._id, token!).then((data) => {
             if (data.data) {
                 console.log(data.data);
             } else {

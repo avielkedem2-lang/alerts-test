@@ -42,6 +42,7 @@ export async function deleteSoldier(token) {
     const id = decodeToken(token).id
     const soldier = await soldiersDal.findSoldierById(id);
     if (!soldier) throw createError(404, "Not fond soldier");
+    if (soldier.role !== "admin") throw createError(400, "The soldier is not allowed to delete a new soldier");
     await soldiersDal.deleteSoldier(id)
     return { data: "soldier delete successfully" }
 }

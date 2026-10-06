@@ -20,7 +20,8 @@ export default function CreateAlert() {
     return (
         <div onSubmit={(e) => {
             e.preventDefault()
-            createAlert(alert.current).then((data) => {
+            const token = localStorage.getItem("token")
+            createAlert(alert.current, token!).then((data) => {
                 if (data.data) {
                     console.log("ddddddddd");
                 } else {

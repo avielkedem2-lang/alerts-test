@@ -1,6 +1,6 @@
 import express from "express"
 import { createAlert, deleteAlertFromDb, getAll, getById, updateAlert } from "../service/alertService.js";
-import { checkBody, checkBodyUpdate, checkParams } from "../middleware/alert.midd.js";
+import { checkBody, checkBodyUpdate, checkParams, checkToken } from "../middleware/alert.midd.js";
 
 
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-router.get("/", async (req, res) => {
+router.get("/", checkToken, async (req, res) => {
     try {
         const data = await getAll()
         res.status(200).json({ data })
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 
 
 
-router.get("/:id", checkParams, async (req, res) => {
+router.get("/:id", checkToken, checkParams, async (req, res) => {
     try {
         const id = req.params.id;
         const data = await getById(id)
@@ -44,7 +44,7 @@ router.get("/:id", checkParams, async (req, res) => {
 
 
 
-router.post("/", checkBody, async (req, res) => {
+router.post("/", checkToken, checkBody, async (req, res) => {
     try {
         const body = req.body
         const data = await createAlert(body)
@@ -61,7 +61,7 @@ router.post("/", checkBody, async (req, res) => {
 
 
 
-router.delete("/:id", checkParams, async (req, res) => {
+router.delete("/:id", checkToken, checkParams, async (req, res) => {
     try {
         const id = req.params.id
         const data = await deleteAlertFromDb(id);
@@ -77,7 +77,7 @@ router.delete("/:id", checkParams, async (req, res) => {
 
 
 
-router.patch("/:id", checkParams, checkBodyUpdate, async (req, res) => {
+router.patch("/:id", checkToken, checkParams, checkBodyUpdate, async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body

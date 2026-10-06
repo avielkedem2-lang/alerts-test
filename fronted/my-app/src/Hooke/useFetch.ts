@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { alertStore } from "../store/alertStore";
 
 
 
 
-export function useFetch(url: string){
+export function useFetch(url: string, token: string){
     // const [data, setData] = useState([])
     const setAlerts = alertStore(s => s.setAlerts)
     useEffect(() => {
