@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteSoldierFromServer, getSoldiers } from "../../fetchSoldiers"
+import { getSoldiers } from "../../fetchSoldiers"
 
 
 type Soldier = {
@@ -22,9 +22,6 @@ export default function AllSoldiers() {
   },[])
   console.log(soldiers);
   
-  const deleteSoldier = ()=> {
-    
-  }
   return (
     <div className="cards">
       {soldiers?.map((soldier) => (
