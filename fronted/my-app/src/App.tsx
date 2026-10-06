@@ -21,15 +21,17 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/soldier' element={<ProtectedRoute><Soldier /></ProtectedRoute>}/>
-        <Route path='/nav' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-        <Route path='/create' element={<ProtectedRoute><CreateAlert /></ProtectedRoute>} />
-        <Route path='/all-cards' element={<ProtectedRoute><AllCards /></ProtectedRoute>} />
-        <Route path='/map' element={<ProtectedRoute><AlertsMap alerts={alerts} /></ProtectedRoute>} />
-        <Route path='/update/:id' element={<ProtectedRoute><UpdateAlert/></ProtectedRoute>}/>
-        <Route path='/get-alert/:id' element={<ProtectedRoute><GetAlert/></ProtectedRoute>}/>
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<ProtectedRoute><HomePage /></ProtectedRoute>} >
+          <Route path='/soldier' element={<ProtectedRoute><Soldier /></ProtectedRoute>} />
+          <Route path='/create' element={<ProtectedRoute><CreateAlert /></ProtectedRoute>} />
+          <Route path='/all-cards' element={<ProtectedRoute><AllCards /></ProtectedRoute>} />
+          <Route path='/map' element={<ProtectedRoute><AlertsMap alerts={alerts} /></ProtectedRoute>} />
+          <Route path='/update/:id' element={<ProtectedRoute><UpdateAlert /></ProtectedRoute>} />
+          <Route path='/get-alert/:id' element={<ProtectedRoute><GetAlert /></ProtectedRoute>} />
+        </Route>
+
         <Route path='*' element="404 not fond page" />
       </Routes>
     </>

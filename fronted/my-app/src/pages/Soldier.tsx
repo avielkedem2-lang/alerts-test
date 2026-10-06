@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSoldierFromServer } from "../fetchSoldiers";
+import { soldierStore } from "../store/soldierStore";
 
 
 
@@ -19,19 +20,22 @@ export default function Soldier() {
   const [soldier, setSoldier] = useState<Soldier>()
   const [isSolder, setIsSoldier] = useState<boolean>(false)
   const token = localStorage.getItem("token")
+  const setSoldierStore = soldierStore(s => s.setSoldier)
   useEffect(() => {
-    getSoldierFromServer(token!).then((data)=> {
-      console.log(data);
-      
-      if (typeof(data) === "object"){
+    getSoldierFromServer(token!).then((data) => {
+      if (typeof (data) === "object") {
         setSoldier(data);
+        setSoldierStore(data)
         setIsSoldier(true)
-      } else{
+      } else {
         setIsError(true)
         setError(data.message)
       }
     })
-  },[token])
+  }, [token])
+
+
+  
   return (
     <div>
       {isError && (
@@ -46,6 +50,7 @@ export default function Soldier() {
           <p>assignedArena: {soldier?.assignedArena}</p>
         </div>
       )}
+      
     </div>
   )
 }
