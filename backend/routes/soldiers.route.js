@@ -1,6 +1,7 @@
 import express from "express"
 import { createSoldier, deleteSoldier, getSoldier, loginSoldier } from "../service/soldiersService"
-
+import { checkLogin, checkRegister } from "../middleware/soldiers.midd"
+import {checkToken} from "../middleware/alert.midd"
 
 
 const router = express.Router()
@@ -9,7 +10,7 @@ const router = express.Router()
 
 
 
-router.post("/register", async (req, res) => {
+router.post("/register",checkRegister, async (req, res) => {
     try {
         const body = req.body
         const data = await createSoldier(body)
@@ -27,7 +28,7 @@ router.post("/register", async (req, res) => {
 
 
 
-router.post("/login", async (req, res) => {
+router.post("/login", checkLogin,async (req, res) => {
     try {
         const body = req.body
         const data = await loginSoldier(body)
@@ -43,7 +44,7 @@ router.post("/login", async (req, res) => {
 
 
 
-router.post("/me", async (req, res) => {
+router.post("/me", checkToken, async (req, res) => {
     try {
         const token = req.token
         const data = await getSoldier(token)
@@ -59,7 +60,7 @@ router.post("/me", async (req, res) => {
 
 
 
-router.post("/users/:id", async (req, res) => {
+router.post("/users/:id", checkToken,async (req, res) => {
     try {
         const token = req.token
         const data = await deleteSoldier(token)
