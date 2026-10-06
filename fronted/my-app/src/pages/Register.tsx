@@ -21,7 +21,8 @@ export default function Register() {
         <div>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                register(soldier.current).then((data) => {
+                const token = localStorage.getItem("token")
+                register(soldier.current, token!).then((data) => {
                     if (data.data) {
                         return navigate("/login")
                     } else{

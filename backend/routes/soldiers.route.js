@@ -1,7 +1,7 @@
 import express from "express"
-import { createSoldier, deleteSoldier, getSoldier, loginSoldier } from "../service/soldiersService"
-import { checkLogin, checkRegister } from "../middleware/soldiers.midd"
-import {checkToken} from "../middleware/alert.midd"
+import { createSoldier, deleteSoldier, getSoldier, loginSoldier } from "../service/soldiersService.js"
+import { checkLogin, checkRegister } from "../middleware/soldiers.midd.js"
+import {checkToken} from "../middleware/alert.midd.js"
 
 
 const router = express.Router()
@@ -10,10 +10,11 @@ const router = express.Router()
 
 
 
-router.post("/register",checkRegister, async (req, res) => {
+router.post("/register", checkToken,checkRegister, async (req, res) => {
     try {
+        const token = req.token
         const body = req.body
-        const data = await createSoldier(body)
+        const data = await createSoldier(body, token)
         res.status(201).json({data})
     } catch (err) {
         if (err.status) {
@@ -44,7 +45,7 @@ router.post("/login", checkLogin,async (req, res) => {
 
 
 
-router.post("/me", checkToken, async (req, res) => {
+router.get("/me", checkToken, async (req, res) => {
     try {
         const token = req.token
         const data = await getSoldier(token)
@@ -60,7 +61,7 @@ router.post("/me", checkToken, async (req, res) => {
 
 
 
-router.post("/users/:id", checkToken,async (req, res) => {
+router.delete("/users/:id", checkToken,async (req, res) => {
     try {
         const token = req.token
         const data = await deleteSoldier(token)
@@ -76,6 +77,10 @@ router.post("/users/:id", checkToken,async (req, res) => {
 
 
 
+
+router.get("/token", checkToken, (req, res) => {
+    return res.status(200).json({data: "success"})
+})
 
 
 

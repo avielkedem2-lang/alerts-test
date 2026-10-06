@@ -3,7 +3,8 @@ import cors from "cors"
 import helmet from "helmet";
 import "dotenv/config"
 import { connectionToMongo } from "./db/mongodb.js"
-import router from "./routes/alertRoute.js";
+import alertRouter from "./routes/alertRoute.js";
+import soldierRouter from "./routes/soldiers.route.js";
 
 
 
@@ -14,7 +15,8 @@ const app = express()
 app.use(express.json());
 app.use(cors());
 app.use(helmet())
-app.use("/api/alerts", router)
+app.use("/api/alerts", alertRouter)
+app.use("/api/auth", soldierRouter)
 
 
 

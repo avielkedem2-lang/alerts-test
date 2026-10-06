@@ -5,9 +5,13 @@ import { decodeToken, createToken } from "../utils/token.js"
 
 
 
-export async function createSoldier(body) {
+export async function createSoldier(body, token) {
+    const id = decodeToken(token).id
+    const soldier = await soldiersDal.findSoldierById(id);
+    if (!soldier) throw createError(404, "Not fond soldier");
     const isSoldier = await soldiersDal.findSoldierByEmail(body.email);
     if (isSoldier) throw createError(409, "The soldier already exists");
+    if (soldier.role !== "admin") throw createError(400, "The soldier is not allowed to create a new soldier")
     const data = await soldiersDal.inertSoldier(body);
     return data
 }
@@ -18,7 +22,6 @@ export async function loginSoldier(body) {
     const soldier = await soldiersDal.findSoldierByEmail(body.email);
     if (!soldier) throw createError(404, "Not fond soldier");
     const isPassword = await comperePassword(body.password, soldier.password);
-    console.log(isPassword);
     if (!isPassword) throw createError(401, "The password is not correct");
     const token = createToken(soldier._id)
     return { token }

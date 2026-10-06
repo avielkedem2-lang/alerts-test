@@ -19,9 +19,28 @@ async function sendRequestPost(url: string, body: object) {
 
 
 
-export async function register(body: object) {
+
+
+
+
+
+async function sendRequestPostWithToken(url: string, body: object, token: string) {
+    try {
+        const {data} = await axios.post(url, body, {headers: {token}})
+        return data
+    } catch (err) {
+        if (axios.isAxiosError(err)){
+            const message = err.response?.data
+            console.log(message);
+            return message
+        }
+    }
+};
+
+
+export async function register(body: object, token:string) {
     const url = "http://localhost:3000/api/auth/register"
-    return await sendRequestPost(url, body)
+    return await sendRequestPostWithToken(url, body, token)
 }
 
 
